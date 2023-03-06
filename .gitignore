@@ -1,0 +1,14 @@
+# Ignore everything:
+*
+
+# But do not ignore
+!*.c
+!*.cpp
+!*.h
+!*.hpp
+!*.py
+!.gitignore
+!*/
+!*makefile
+
+*/UML
