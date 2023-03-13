@@ -16,12 +16,19 @@
 namespace remote_tasker
 {
 
+namespace Reactor
+{
+
+// reactor is an object that implements event driven behaviour.
+// in linux- it's attached to file descriptor(s) and sleeps until there is a change in the file(s).
+
 using Function = std::function<void()>;
 
 class Reactor
 {
 public:
     enum Mode{READ,WRITE};
+    using Pair = std::pair<int,Mode>;
 
     explicit Reactor();
     ~Reactor();
@@ -36,15 +43,15 @@ public:
     void Run();
 
 private:
-    using Pair = std::pair<int,Mode>;
 
-    std::vector<Pair> select(const std::vector<Pair> &);
+    std::vector<Pair> Select(const std::vector<Pair> &);
 
     std::map<Pair,Function> m_container; 
     std::atomic<bool> m_shouldStop;
 };
 
 
+}  //reactor
 }  //remote_tasker
 
 
