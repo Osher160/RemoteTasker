@@ -26,7 +26,7 @@ void Reactor::Remove(int fd,Mode mode)
     m_container.erase(fdNmode);
 }
 
-void Reactor::stop()
+void Reactor::Stop()
 {
     m_shouldStop.store(1);
 }

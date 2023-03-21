@@ -27,8 +27,8 @@ public:
     enum Mode{READ,WRITE};
     using Pair = std::pair<int,Mode>;
 
-    explicit Reactor();
-    ~Reactor();
+    explicit Reactor() = default;
+    ~Reactor() = default;
 
     // None Copyable
     Reactor(const Reactor& o) = delete;
@@ -36,7 +36,7 @@ public:
 
     void Remove(int fd,Mode mode);
     void Add(Function action, int fd, Mode mode);
-    void stop();
+    void Stop();
     void Run();
 
 private:
