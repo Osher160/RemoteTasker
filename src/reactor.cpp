@@ -1,12 +1,14 @@
-
 #include <iostream>
+#include <algorithm> //for_each
+#include <cerrno> //errno
 
-#include <algorithm>
-//errno
-#include <cerrno>
+#ifdef __linux__
+#include <sys/select.h> //select & Macros
 
-//select & Macros
-#include <sys/select.h>
+#elif _WIN32
+//stub
+
+#endif
 
 #include "reactor.hpp"
 
