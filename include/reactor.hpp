@@ -16,9 +16,6 @@
 namespace remote_tasker
 {
 
-namespace Reactor
-{
-
 // reactor is an object that implements event driven behaviour.
 // in linux- it's attached to file descriptor(s) and sleeps until there is a change in the file(s).
 
@@ -51,7 +48,6 @@ private:
 };
 
 
-}  //reactor
 }  //remote_tasker
 
 

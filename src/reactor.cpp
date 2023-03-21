@@ -1,7 +1,9 @@
-//errno
-#include <cerrno>
 
 #include <iostream>
+
+#include <algorithm>
+//errno
+#include <cerrno>
 
 //select & Macros
 #include <sys/select.h>
@@ -10,9 +12,6 @@
 
 
 namespace remote_tasker
-{
-
-namespace Reactor
 {
 
 void Reactor::Add(Function action, int fd, Mode mode)
@@ -131,10 +130,38 @@ std::vector<Reactor::Pair> Reactor::Select(const std::vector<Pair> &fds)
 
 void Reactor::Run()
 {
-    
+
+
+    while(!m_shouldStop)
+    {
+        // convert from map to vector
+        std::vector<Pair> to_select;
+
+        std::for_each(m_container.begin(),m_container.end(),
+                            [&to_select](std::pair<Pair,Function> fds_n_mode)
+                                    {to_select.push_back(fds_n_mode.first);});
+
+        //init new vector with the fds that changed
+        std::vector<Reactor::Pair> fds_changed = Select(to_select);
+
+        //doing the functions of the fds_changed
+        std::for_each(fds_changed.begin(),fds_changed.end(),
+        
+        [&](Reactor::Pair find_me)
+        {
+            this->m_container.at(find_me)();
+        }
+
+        );
+
+        while(to_select.size() > 0)
+        {
+            to_select.pop_back();
+        }
+
+    }
 }
 
 
-} //namespace Reactor
 
 } //namespace remote_tasker
