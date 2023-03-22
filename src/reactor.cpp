@@ -1,3 +1,9 @@
+/******************************************************************************/
+/*	Project:	Remote Tasker   										      */
+/*	File:		reactor.cpp         										  */
+/*	Version: 	0.01														  */
+/******************************************************************************/
+
 #include <iostream>
 #include <algorithm> //for_each
 #include <cerrno> //errno
