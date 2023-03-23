@@ -12,16 +12,17 @@ int main(int argc, const char **argv)
         exit(-1);
     }
 
-    std::ifstream file = FindFile(argv[1]);
-    int to_output = 0;
-    
-    std::ofstream test_file("test_file");
+    std::ifstream file = FindFile(argv[1], "/home/");
 
-    while(file)
+    
+    std::ofstream test_file(argv[1]);
+
+    while(!file.eof())
     {
-        to_output = file.get();
-        test_file << to_output;
+        test_file.put(file.get());
     }
+
+    test_file.close();
 
     return 0;
 }

@@ -15,7 +15,7 @@ namespace remote_tasker
 // throw std::runtime_error if failed to find
 
 //for 0.01 - stops at the first occurrence of the file. find only works inside /home 
-std::ifstream FindFile(std::string file_name);
+std::ifstream FindFile(std::string file_name, std::string root);
 
 
 
