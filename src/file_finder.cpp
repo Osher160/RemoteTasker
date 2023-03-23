@@ -4,7 +4,7 @@
 namespace remote_tasker
 {
 
-std::ofstream FindFile(std::string file_name)
+std::ifstream FindFile(std::string file_name)
 {
 
 }
