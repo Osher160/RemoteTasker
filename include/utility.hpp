@@ -3,6 +3,8 @@
 /*	File:		utility.hpp		    										  */
 /*	Version: 	0.01														  */
 /******************************************************************************/
+#ifndef __UTILITY_HPP__
+#define __UTILITY_HPP__
 
 #include <iostream>
 // check if all test ret value are as expected 
@@ -19,3 +21,5 @@ inline void ExitIfBad(int val,std::string massage)
         exit(-1);
     }
 }
+
+#endif //__UTILITY_HPP__
