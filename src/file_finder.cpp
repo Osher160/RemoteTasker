@@ -1,7 +1,13 @@
+/******************************************************************************/
+/*	Project:	Remote Tasker   										      */
+/*	File:		file_finder.cpp	    										  */
+/*	Version: 	0.01														  */
+/******************************************************************************/
 #include <filesystem>
 #include <iostream>
 
 #include "file_finder.hpp"
+
 namespace remote_tasker
 {
 
