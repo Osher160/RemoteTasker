@@ -12,14 +12,14 @@ int main(int argc, const char **argv)
         exit(-1);
     }
 
-    std::ifstream stream = FindFile(argv[1]);
+    std::ifstream file = FindFile(argv[1]);
     int to_output = 0;
     
     std::ofstream test_file("test_file");
 
-    while(stream)
+    while(file)
     {
-        to_output = stream.get();
+        to_output = file.get();
         test_file << to_output;
     }
 
