@@ -1,3 +1,5 @@
+#include <filesystem>
+
 #include "search_manager.hpp"
 #include "file_finder.hpp"
 
@@ -21,14 +23,33 @@ namespace remote_tasker
             return;
         }
 
+        if(!std::filesystem::exists(m_save_to) || !std::filesystem::is_directory(m_save_to))
+        {
+            std::filesystem::create_directory(m_save_to);
+        }
+
         std::string save_to = m_save_to + '/' + file_name;
 
-        std::ofstream new_file(save_to);
+        std::ofstream new_file(save_to,std::ios::binary | std::ios::out);
 
-        while(!file.eof())
+        bool is_true = true;
+
+        while(is_true)
+            
         {
-            new_file.put(file.get());
+            int ch = file.get();
+
+            if(file.eof())
+            {
+                break;
+            } 
+
+            new_file.put(ch);
         }
+
+        std::cout << "the file: " << file_name << " saved into the " << m_save_to 
+        << " directory " << std::endl; 
+        
         
     }
 

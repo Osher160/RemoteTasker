@@ -22,12 +22,14 @@ std::ifstream FindFile(std::string file_name,std::string root)
                                 (entry.path().filename() == file_name))
         {
             
-            ret.open(entry.path());
+            ret.open(entry.path(),std::ios::binary | std::ios::in);
             return ret;
         }
     }
 
-    throw std::runtime_error("file not found");
+    std::string err = "file " + file_name + " not found";
+
+    throw std::runtime_error(err);
 }
 
 } //namespace remote_tasker
