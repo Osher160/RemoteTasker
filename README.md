@@ -13,5 +13,22 @@ The remote tasker app does remote operations on different computers in the same 
 
 # Operations
 
-- search and copy:
-for now, the remote tasker can search for a file and transfer it to a directory.
+- Search and copy:
+for now, the remote tasker can search for a file and copy it to a directory.
+
+# Dependencies
+## Build Dependencies
+- G++ compiler
+- Makefile
+
+# Usage
+- 1. Download the repo.
+- 2. Build it with Make main
+- 3. Run "sudo ./remote_tasker"
+- 4. For 0.01 - enter the directory for the copying files.
+- 5. Every time that you need a certain file, you can enter its name.
+     The remote tasker will look it up and copy it to the directory.
+
+# known issues
+- Search is only in /home directories for now.
+- Search stops after the first occurrence.
