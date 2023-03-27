@@ -14,11 +14,11 @@ namespace remote_tasker
 class SearchManager
 {
 public:    
-    explicit SearchManager(std::string save_dir = "");
+    explicit SearchManager(const std::string save_dir = "");
     ~SearchManager()=default;
 
     // for now - searching only in /home/ directories. 
-    void SearchNSendSameComputer(std::string file_name);
+    void SearchNSendSameComputer(const std::string file_name);
     
     // linux version TODO -- 0.02
     // void SearchNSendNewComputer(std::string file_name, int socket_fd);

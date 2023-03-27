@@ -6,11 +6,11 @@
 namespace remote_tasker
 {
 
-    SearchManager::SearchManager(std::string dir_name): m_save_to(dir_name) 
+    SearchManager::SearchManager(const std::string dir_name): m_save_to(dir_name) 
     {}
 
     // linux version 
-    void SearchManager::SearchNSendSameComputer(std::string file_name)
+    void SearchManager::SearchNSendSameComputer(const std::string file_name)
     {
         std::ifstream file;
         try

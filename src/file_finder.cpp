@@ -11,11 +11,11 @@
 namespace remote_tasker
 {
 
-std::ifstream FindFile(std::string file_name,std::string root)
+std::ifstream FindFile(const std::string file_name,const std::string root)
 {
     std::ifstream ret;
 
-    for(auto entry : std::filesystem::recursive_directory_iterator(root,
+    for(const auto& entry : std::filesystem::recursive_directory_iterator(root,
                 std::filesystem::directory_options::skip_permission_denied))
     {
         if(std::filesystem::is_regular_file(entry.path()) && 
