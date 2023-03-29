@@ -10,6 +10,7 @@ The remote tasker app does remote operations on different computers in the same 
 - 0.04- windows support.
 - 0.05- multiple search options.
 - 0.06- adding a setting file.
+- 0.07- multiple connections.
 
 # Operations
 
