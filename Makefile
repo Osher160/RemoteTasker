@@ -12,6 +12,10 @@ reactor : ./src/reactor.cpp ./src/utility.cpp ./tests/reactor_test.cpp
 file_finder : ./src/file_finder.cpp ./src/utility.cpp ./tests/file_finder_test.cpp
 	$(CC) $(CPPFLAGS) ./src/file_finder.cpp ./src/utility.cpp ./tests/file_finder_test.cpp -o $@
 
+connector: ./src/connector.cpp ./src/utility.cpp
+	$(CC) $(CPPFLAGS) $^ -o $@
+
 main : ./src/file_finder.cpp ./src/search_manager.cpp ./src/reactor.cpp ./src/utility.cpp ./main/main.cpp
 	$(CC) $(CPPFLAGS) $^ -o remote_tasker
+
 %.cpp :

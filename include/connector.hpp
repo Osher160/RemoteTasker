@@ -3,22 +3,12 @@
 /*	File:		connector.hpp	    										  */
 /*	Version: 	0.02														  */
 /******************************************************************************/
+#ifndef __CONNECTOR_HPP__
+#define __CONNECTOR_HPP__
+
 
 #include <iostream>
 #include <vector>
-
-#ifdef __linux__
-#include <unistd.h> // read 
-
-#include <sys/types.h>
-#include <netinet/in.h> // sockaddr_in 
-#include <arpa/inet.h> // inet_addr 
-
-#include <sys/socket.h> // sockets 
-
-#elif _WIN32
-
-#endif
 
 
 namespace remote_tasker
@@ -28,33 +18,41 @@ class Socket
 {
 public:
 
-    virtual int Send(const std::vector<char>& msg) = 0;
+    virtual ssize_t Send(const std::vector<char>& msg) = 0;
 
-    virtual const std::vector<char>& Receive() = 0;
+    virtual const std::vector<char> Receive() = 0;
+
+    enum  { MAX_USR_MSG = 4096};
 };
 
 
-class SocketServer : public Socket 
+class ServerSocket : public Socket 
 {
 public:
-    SocketServer() = default;
+    ServerSocket(): m_client(0) {};
 
-    // return endpoint to client
-    int openServer(int port);
+    void openServer(int port);
+
+    virtual ssize_t Send(const std::vector<char>& msg);
+    virtual const std::vector<char> Receive();
 
 
 private:
-
+    int m_client;
 };
 
 class SocketClient : public Socket
 {
 public:
-    // return endpoint to server
-    int ConnectToServer(int port,const std::string& ip);
+    void ConnectToServer(int port,const std::string& ip);
+
+    virtual ssize_t Send(const std::vector<char>& msg);
+    virtual const std::vector<char> Receive();
 
 private:
+    int m_server;
 
 };
 
 }// namespace remote_tasker
+#endif //__CONNECTOR_HPP__
