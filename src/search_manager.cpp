@@ -49,9 +49,11 @@ namespace remote_tasker
 
         std::cout << "the file: " << file_name << " saved into the " << m_save_to 
         << " directory " << std::endl; 
-        
-        
     }
 
+    void SearchManager::SearchNSendNewComputer(std::string file_name, ServerSocket &m_sock)
+    {
+        
+    }
 
 } // namespace remote_tasker

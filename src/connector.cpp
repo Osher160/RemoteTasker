@@ -46,6 +46,11 @@ void ServerSocket::openServer(int port)
     m_client = accept(sock,(sockaddr *)&addr_client,&size);
 }
 
+int ServerSocket::GetClient()
+{
+    return m_client;
+}
+
 ssize_t ServerSocket::Send(const std::vector<char>& msg)
 {
     return send(m_client,msg.data(),MAX_USR_MSG,MSG_CONFIRM);
@@ -62,6 +67,11 @@ const std::vector<char> ServerSocket::Receive()
     ret.resize(real_size);
 
     return ret;
+}
+
+void ServerSocket::Connect(int port, const std::string &ip)
+{
+    openServer(port);
 }
 
 void SocketClient::ConnectToServer(int port, const std::string &ip)
@@ -82,10 +92,20 @@ void SocketClient::ConnectToServer(int port, const std::string &ip)
 
 }
 
+void SocketClient::Connect(int port, const std::string &ip)
+{
+    ConnectToServer(port,ip);
+}
+
 ssize_t SocketClient::Send(const std::vector<char> &msg)
 {
     return send(m_server,msg.data(),MAX_USR_MSG,MSG_CONFIRM);
 
+}
+
+int SocketClient::GetServer()
+{
+    return m_server;
 }
 
 const std::vector<char> SocketClient::Receive()

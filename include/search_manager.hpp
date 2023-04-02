@@ -8,6 +8,8 @@
 
 #include<iostream>
 
+#include "connector.hpp"
+
 namespace remote_tasker
 {
 
@@ -20,13 +22,10 @@ public:
     // for now - searching only in /home/ directories. 
     void SearchNSendSameComputer(const std::string file_name);
     
-    // linux version TODO -- 0.02
-    // void SearchNSendNewComputer(std::string file_name, int socket_fd);
-
+    void SearchNSendNewComputer(std::string file_name, ServerSocket& m_sock);
 
 private:
     std::string m_save_to;
-    // int m_socket? -- 0.02
 }; //class SearchManager
 
 } // namespace remote_tasker

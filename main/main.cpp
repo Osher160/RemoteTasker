@@ -1,18 +1,17 @@
 #include <iostream>
 
-#include <unistd.h> // read
-
 #include "utility.hpp"
 #include "file_finder.hpp"
 #include "reactor.hpp"
 #include "search_manager.hpp"
+#include "connector.hpp"
 
 void RunAll();
 
 int main()
 {
     std::cout << "Welcome to Remote Tasker," <<
-    " In this application you can send and receive files in your Intranet." 
+    " In this application you can send and receive files directly through your WIFI." 
     << std::endl;
 
 
@@ -24,7 +23,6 @@ int main()
 
 void OnEventStdin(remote_tasker::SearchManager &search_m)
 {
-    // hardcoded for now
     std::string buff;
 
     std::cin >> buff;
@@ -33,6 +31,23 @@ void OnEventStdin(remote_tasker::SearchManager &search_m)
 }
 
 void RunAll()
+{
+// pseudo:
+
+// TODO - REMOVE IN NEXT VERSIONS - check if server or client and create the one needed
+    std::cout << "are this computer is server/client?" << std::endl;
+    
+    std::string is_server;
+    std::cin >> is_server;
+    
+// get ip(if not server), port and dir name
+
+// sign up to the reactor with the socket.
+// run the reactor
+
+}
+
+void RunThisComputerSearch()
 {
     using namespace remote_tasker;
  
