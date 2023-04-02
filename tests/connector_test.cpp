@@ -31,9 +31,9 @@ void ServerTest()
     sock.openServer(50000);
 
     std::vector<char> arr;
+    char cpy_me[15] =  "hi from server";
 
-    arr.push_back('h');
-    arr.push_back('i');
+    arr.insert(arr.end(),cpy_me, cpy_me + 15);
 
     sock.Send(arr);
     std::vector<char> arr_recv = sock.Receive();
@@ -52,7 +52,7 @@ void ClientTest()
     std::vector<char> arr_recv = sock.Receive();
 
     std::cout << arr_recv.data() << std::endl;
-    
+
     std::vector<char> arr;
 
     arr.push_back('b');
