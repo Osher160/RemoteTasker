@@ -51,7 +51,8 @@ namespace remote_tasker
         << " directory " << std::endl; 
     }
 
-void SearchManager::SearchNSendNewComputer(std::string file_name, remote_tasker::Socket *sock)
+void SearchManager::SearchNSendNewComputer(std::string file_name, 
+                        std::shared_ptr<remote_tasker::Socket> sock)
 {
     
 }

@@ -22,7 +22,8 @@ public:
     // for now - searching only in /home/ directories. 
     void SearchNSendSameComputer(const std::string file_name);
     
-    void SearchNSendNewComputer(std::string file_name, remote_tasker::Socket* sock);
+    void SearchNSendNewComputer(std::string file_name, 
+                std::shared_ptr<remote_tasker::Socket> sock);
 
 private:
     std::string m_save_to;

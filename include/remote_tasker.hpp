@@ -10,6 +10,10 @@
 #include "connector.hpp"
 #include "search_manager.hpp"
 
+namespace remote_tasker
+{
+
+
 class RemoteTasker
 {
 public:
@@ -21,7 +25,10 @@ public:
     void RunAll();
 
 private:
+    void InitAndActivateReactor();
     std::shared_ptr<remote_tasker::Reactor> m_reactor;
     std::shared_ptr<remote_tasker::Socket> m_sock;
     std::shared_ptr<remote_tasker::SearchManager> m_search_manager;
 };
+
+} // namespace remote_tasker
