@@ -3,7 +3,35 @@
 using namespace remote_tasker;
 
 RemoteTasker::RemoteTasker(std::shared_ptr<remote_tasker::Reactor> reactor,
-std::shared_ptr<remote_tasker::SearchManager> search_manager): m_reactor(reactor),m_search_manager(search_manager)
+std::shared_ptr<remote_tasker::SearchManager> search_manager)
+: m_sock(nullptr),
+  m_reactor(reactor),
+  m_search_manager(search_manager)
+{
+
+}
+
+void OnEventStdin(remote_tasker::SearchManager &search_m)
+{
+    std::string buff;
+
+    std::cin >> buff;
+    
+    search_m.SearchNSendSameComputer(buff);
+}
+
+void RemoteTasker::RunOnlyThisComputer()
+{
+    m_reactor->Add((std::bind(OnEventStdin,*m_search_manager)),0,Reactor::Mode::READ);   
+
+    std::cout << "when you need a file, enter its name.\n" <<
+    "the program will search it for you and will send it to the directory you entered earlier." << std::endl;
+
+
+    m_reactor->Run();
+}
+
+void RemoteTasker::RunAll()
 {
     // TODO - REMOVE IN NEXT VERSIONS - check if server or client and create the one needed
     std::cout << "Is this computer server/client?" << std::endl;
@@ -42,31 +70,6 @@ std::shared_ptr<remote_tasker::SearchManager> search_manager): m_reactor(reactor
     }
 }
 
-void OnEventStdin(remote_tasker::SearchManager &search_m)
-{
-    std::string buff;
-
-    std::cin >> buff;
-    
-    search_m.SearchNSendSameComputer(buff);
-}
-
-void RemoteTasker::RunOnlyThisComputer()
-{
-    m_reactor->Add((std::bind(OnEventStdin,*m_search_manager)),0,Reactor::Mode::READ);   
-
-    std::cout << "when you need a file, enter its name.\n" <<
-    "the program will search it for you and will send it to the directory you entered earlier." << std::endl;
-
-
-    m_reactor->Run();
-}
-
-void RemoteTasker::RunAll()
-{
-
-}
-
 
 void OnSearchingReq(std::shared_ptr<remote_tasker::SearchManager> search_m,
                              std::shared_ptr<remote_tasker::Socket> sock)
@@ -84,7 +87,7 @@ void OnEventSearch(std::shared_ptr<remote_tasker::SearchManager> search_m,
 
     std::vector<char> name_vec;
 
-    std::copy(name.begin(),name.end(),name_vec);
+    std::copy(name.begin(),name.end(),std::back_inserter(name_vec));
 
     sock->Send(name_vec);
 }

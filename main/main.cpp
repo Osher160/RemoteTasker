@@ -29,9 +29,9 @@ void Activate()
     << std::endl;
 
     std::cout << "If you want to search files in this computer, Please press 0"
-    << "if you want to search in another computer, please press 1" << std::endl;
+    << " if you want to search in another computer, please press 1" << std::endl;
     
-    bool is_true;
+    char is_true;
     std::cin >> is_true;
 
     std::cout << "Enter the directory name for copying the files into:" << std::endl;
@@ -44,7 +44,7 @@ void Activate()
 
     RemoteTasker remote_tasker(reactor,searchNcopy);
 
-    if(is_true)
+    if(is_true == '1')
     {
         remote_tasker.RunAll();
     }
