@@ -24,6 +24,7 @@ public:
     
     void SearchNSendNewComputer(std::string file_name, 
                 std::shared_ptr<remote_tasker::Socket> sock);
+    void SaveFromOtherComputer(std::string file_name,std::shared_ptr<remote_tasker::Socket> sock);
 
 private:
     std::string m_save_to;

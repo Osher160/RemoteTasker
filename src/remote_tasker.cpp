@@ -46,11 +46,11 @@ void RemoteTasker::RunAll()
 
     if(is_server == "server")
     {
-        ServerSocket sock;
+        m_sock.reset(new ServerSocket);
 
         std::cout << "waiting for client to connect..." << std::endl;
         
-        sock.openServer(port);
+        m_sock->Connect(port,"never mind");
         
         InitAndActivateReactor();
     }
@@ -62,9 +62,8 @@ void RemoteTasker::RunAll()
         std::string ip;
         std::cin >> ip;
 
-        SocketClient sock;
-
-        sock.ConnectToServer(port,ip);
+        m_sock.reset(new SocketClient);
+        m_sock->Connect(port,ip);
         
         InitAndActivateReactor();
     }
@@ -90,6 +89,9 @@ void OnEventSearch(std::shared_ptr<remote_tasker::SearchManager> search_m,
     std::copy(name.begin(),name.end(),std::back_inserter(name_vec));
 
     sock->Send(name_vec);
+
+    // wait for the file and save it
+    search_m->SaveFromOtherComputer(name,sock);
 }
 
 

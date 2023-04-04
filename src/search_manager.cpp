@@ -54,7 +54,43 @@ namespace remote_tasker
 void SearchManager::SearchNSendNewComputer(std::string file_name, 
                         std::shared_ptr<remote_tasker::Socket> sock)
 {
+    std::ifstream file;
+
+    try
+    {
+        file =  FindFile(file_name,"/home/");
+    }
+    
+    catch(std::runtime_error &err)
+    {
+        std::cout << err.what() << std::endl;
+        return;
+    }
+
+    bool is_true = true;
+
+    std::vector<char> file_to_send;
+
+    while(is_true)
+    {
+        char ch = file.get();
+
+        if(file.eof())
+        {
+            break;
+        } 
+
+        file_to_send.push_back(ch);
+    }
+
+    sock->Send(file_to_send);
+}
+
+void SearchManager::SaveFromOtherComputer(std::string file_name, 
+                        std::shared_ptr<remote_tasker::Socket> sock)
+{
     
 }
+
 
 } // namespace remote_tasker
