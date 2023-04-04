@@ -48,11 +48,21 @@ void ServerSocket::openServer(int port)
 
 ssize_t ServerSocket::Send(const std::vector<char>& msg)
 {
-    return send(m_client,msg.data(),msg.size(),MSG_CONFIRM);
+    // TODO add error checking
+    ssize_t bytes_send = send(m_client,msg.data(),msg.size(),MSG_CONFIRM);
+
+    while(bytes_send != msg.size())
+    {
+        bytes_send += send(m_client,msg.data(),msg.size(),MSG_CONFIRM);
+    }
+
+    return bytes_send;
 }
 
 const std::vector<char> ServerSocket::Receive()
 {
+    // TODO add error checking
+
     std::vector<char> ret;
     
     ret.resize(MAX_USR_MSG);
@@ -66,19 +76,25 @@ const std::vector<char> ServerSocket::Receive()
 
 const std::vector<char> ServerSocket::Receive(int size)
 {
+    // TODO add error checking
+
     std::vector<char> ret;
     
     ret.resize(MAX_USR_MSG);
 
     ssize_t real_size = recv(m_client,ret.data(),size,MSG_CONFIRM);
 
-    ret.resize(real_size);
+    while(real_size != size)
+    {
+        real_size += recv(m_server,ret.data() + real_size,(size - real_size),MSG_CONFIRM);
+    }
 
     return ret;
 }
 
 int ServerSocket::GetEndpoint()
 {
+    
     return m_client;
 }
 
@@ -114,7 +130,15 @@ void SocketClient::Connect(int port, const std::string &ip)
 
 ssize_t SocketClient::Send(const std::vector<char> &msg)
 {
-    return send(m_server,msg.data(),MAX_USR_MSG,MSG_CONFIRM);
+    // TODO add error checking
+    ssize_t bytes_send = send(m_client,msg.data(),msg.size(),MSG_CONFIRM);
+
+    while(bytes_send != msg.size())
+    {
+        bytes_send += send(m_client,msg.data(),msg.size(),MSG_CONFIRM);
+    }
+
+    return bytes_send;
 
 }
 
@@ -125,6 +149,8 @@ int SocketClient::GetEndpoint()
 
 const std::vector<char> SocketClient::Receive()
 {
+    // TODO add error checking
+
     std::vector<char> ret;
     
     ret.resize(MAX_USR_MSG);
@@ -138,13 +164,18 @@ const std::vector<char> SocketClient::Receive()
 
 const std::vector<char> SocketClient::Receive(int size)
 {
+    // TODO add error checking
+
     std::vector<char> ret;
     
     ret.resize(size);
 
     ssize_t real_size = recv(m_server,ret.data(),size,MSG_CONFIRM);
 
-    ret.resize(real_size);
+    while(real_size != size)
+    {
+        real_size += recv(m_server,ret.data() + real_size,(size - real_size),MSG_CONFIRM);
+    }
 
     return ret;
 }
