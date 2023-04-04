@@ -17,12 +17,15 @@ namespace remote_tasker
 class Socket
 {
 public:
-
+    virtual int GetEndpoint() =0;
+    virtual void Connect(int port,const std::string& ip) =0;
     virtual ssize_t Send(const std::vector<char>& msg) = 0;
 
     virtual const std::vector<char> Receive() = 0;
+    virtual const std::vector<char> Receive(int size)= 0;
 
-    enum  { MAX_USR_MSG = 4096};
+
+    enum  { MAX_USR_MSG = 4096000};
 };
 
 
@@ -33,9 +36,14 @@ public:
 
     void openServer(int port);
 
+    // if not initialized (A.K.A openServer activated) - return 0
+    virtual int GetEndpoint();
+
+    virtual void Connect(int port,const std::string& ip);
     virtual ssize_t Send(const std::vector<char>& msg);
     virtual const std::vector<char> Receive();
-
+    virtual const std::vector<char> Receive(int size);
+    
 
 private:
     int m_client;
@@ -45,9 +53,14 @@ class SocketClient : public Socket
 {
 public:
     void ConnectToServer(int port,const std::string& ip);
+    // if not initialized (A.K.A ConnectToServer activated) - return 0
 
+    virtual int GetEndpoint();
+
+    virtual void Connect(int port,const std::string& ip);
     virtual ssize_t Send(const std::vector<char>& msg);
     virtual const std::vector<char> Receive();
+    virtual const std::vector<char> Receive(int size);
 
 private:
     int m_server;
