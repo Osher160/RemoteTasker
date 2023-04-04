@@ -27,8 +27,8 @@ public:
 private:
     void InitAndActivateReactor();
     std::shared_ptr<remote_tasker::Reactor> m_reactor;
-    std::shared_ptr<remote_tasker::Socket> m_sock;
     std::shared_ptr<remote_tasker::SearchManager> m_search_manager;
+    std::shared_ptr<remote_tasker::Socket> m_sock;
 };
 
 } // namespace remote_tasker

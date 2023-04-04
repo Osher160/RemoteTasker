@@ -4,9 +4,9 @@ using namespace remote_tasker;
 
 RemoteTasker::RemoteTasker(std::shared_ptr<remote_tasker::Reactor> reactor,
 std::shared_ptr<remote_tasker::SearchManager> search_manager)
-: m_sock(nullptr),
-  m_reactor(reactor),
-  m_search_manager(search_manager)
+: m_reactor(reactor),
+  m_search_manager(search_manager),
+  m_sock(nullptr)
 {
 
 }

@@ -48,7 +48,7 @@ void ServerSocket::openServer(int port)
 
 ssize_t ServerSocket::Send(const std::vector<char>& msg)
 {
-    return send(m_client,msg.data(),MAX_USR_MSG,MSG_CONFIRM);
+    return send(m_client,msg.data(),msg.size(),MSG_CONFIRM);
 }
 
 const std::vector<char> ServerSocket::Receive()
@@ -57,7 +57,20 @@ const std::vector<char> ServerSocket::Receive()
     
     ret.resize(MAX_USR_MSG);
 
-    ssize_t real_size = recv(m_client,ret.data(),MAX_USR_MSG,MSG_WAITALL);
+    ssize_t real_size = recv(m_client,ret.data(),MAX_USR_MSG,MSG_CONFIRM);
+
+    ret.resize(real_size);
+
+    return ret;
+}
+
+const std::vector<char> ServerSocket::Receive(int size)
+{
+    std::vector<char> ret;
+    
+    ret.resize(MAX_USR_MSG);
+
+    ssize_t real_size = recv(m_client,ret.data(),size,MSG_CONFIRM);
 
     ret.resize(real_size);
 
@@ -72,6 +85,8 @@ int ServerSocket::GetEndpoint()
 void ServerSocket::Connect(int port, const std::string &ip)
 {
     openServer(port);
+
+    (void)ip;
 }
 
 void SocketClient::ConnectToServer(int port, const std::string &ip)
@@ -114,7 +129,20 @@ const std::vector<char> SocketClient::Receive()
     
     ret.resize(MAX_USR_MSG);
 
-    ssize_t real_size = recv(m_server,ret.data(),MAX_USR_MSG,MSG_WAITALL);
+    ssize_t real_size = recv(m_server,ret.data(),MAX_USR_MSG,MSG_CONFIRM);
+
+    ret.resize(real_size);
+
+    return ret;
+}
+
+const std::vector<char> SocketClient::Receive(int size)
+{
+    std::vector<char> ret;
+    
+    ret.resize(size);
+
+    ssize_t real_size = recv(m_server,ret.data(),size,MSG_CONFIRM);
 
     ret.resize(real_size);
 
