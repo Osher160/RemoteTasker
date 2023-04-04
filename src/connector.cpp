@@ -86,7 +86,6 @@ const std::vector<char> ServerSocket::Receive(int size)
 
     while(real_size != size)
     {
-
         real_size += recv(m_client,ret.data() + real_size,(size - real_size),MSG_CONFIRM);
     }
 
@@ -136,7 +135,6 @@ ssize_t SocketClient::Send(const std::vector<char> &msg)
 
     while(bytes_send != msg.size())
     {
-
         bytes_send += send(m_server,msg.data() + bytes_send,msg.size() - bytes_send,MSG_CONFIRM);
     }
 
@@ -176,7 +174,6 @@ const std::vector<char> SocketClient::Receive(int size)
 
     while(real_size != size)
     {
-
         real_size += recv(m_server,ret.data() + real_size,(size - real_size),MSG_CONFIRM);
     }
 
