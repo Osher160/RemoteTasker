@@ -67,7 +67,7 @@ const std::vector<char> ServerSocket::Receive()
     
     ret.resize(MAX_USR_MSG);
 
-    ssize_t real_size = recv(m_client,ret.data(),MAX_USR_MSG,MSG_CONFIRM);
+    ssize_t real_size = recv(m_client,ret.data(),MAX_USR_MSG,0);
 
     ret.resize(real_size);
 
@@ -80,13 +80,13 @@ const std::vector<char> ServerSocket::Receive(int size)
 
     std::vector<char> ret;
     
-    ret.resize(MAX_USR_MSG);
+    ret.resize(size * sizeof(char));
 
-    ssize_t real_size = recv(m_client,ret.data(),size,MSG_CONFIRM);
+    ssize_t real_size = recv(m_client,ret.data(),size,0);
 
     while(real_size != size)
     {
-        real_size += recv(m_client,ret.data() + real_size,(size - real_size),MSG_CONFIRM);
+        real_size += recv(m_client,ret.data() + real_size,(size - real_size),0);
     }
 
     return ret;
@@ -155,7 +155,7 @@ const std::vector<char> SocketClient::Receive()
     
     ret.resize(MAX_USR_MSG);
 
-    ssize_t real_size = recv(m_server,ret.data(),MAX_USR_MSG,MSG_CONFIRM);
+    ssize_t real_size = recv(m_server,ret.data(),MAX_USR_MSG,0);
 
     ret.resize(real_size);
 
@@ -168,13 +168,13 @@ const std::vector<char> SocketClient::Receive(int size)
 
     std::vector<char> ret;
     
-    ret.resize(size);
+    ret.resize(size * sizeof(char));
 
-    ssize_t real_size = recv(m_server,ret.data(),size,MSG_CONFIRM);
+    ssize_t real_size = recv(m_server,ret.data(),size,0);
 
     while(real_size != size)
     {
-        real_size += recv(m_server,ret.data() + real_size,(size - real_size),MSG_CONFIRM);
+        real_size += recv(m_server,ret.data() + real_size,(size - real_size),0);
     }
 
     return ret;

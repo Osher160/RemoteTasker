@@ -16,7 +16,7 @@ namespace remote_tasker
 class SearchManager
 {
 public:    
-    explicit SearchManager(const std::string save_dir = "");
+    explicit SearchManager(const std::string save_dir = "saves");
     ~SearchManager()=default;
 
     // for now - searching only in /home/ directories. 
