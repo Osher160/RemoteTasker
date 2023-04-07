@@ -28,7 +28,7 @@ void Activate()
     " In this application you can send and receive files directly through your WIFI." 
     << std::endl;
 
-    std::cout << "If you want to search files in this computer, Please press 0"
+    std::cout << "If you want to search files in this computer, Please press 0" << std::endl
     << " if you want to search in another computer, please press 1" << std::endl;
     
     char is_true;
