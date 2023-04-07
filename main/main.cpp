@@ -29,7 +29,7 @@ void Activate()
     << std::endl;
 
     std::cout << "If you want to search files in this computer, Please press 0" << std::endl
-    << " if you want to search in another computer, please press 1" << std::endl;
+    << "If you want to search in another computer, please press 1" << std::endl;
     
     char is_true;
     std::cin >> is_true;

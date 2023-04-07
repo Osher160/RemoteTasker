@@ -7,6 +7,7 @@
 #define __SEARCH_MANAGER_HPP__
 
 #include<iostream>
+#include<memory>
 
 #include "connector.hpp"
 

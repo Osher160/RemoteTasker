@@ -49,11 +49,19 @@ void ServerSocket::openServer(int port)
 ssize_t ServerSocket::Send(const std::vector<char>& msg)
 {
     // TODO add error checking
-    ssize_t bytes_send = send(m_client,msg.data(),msg.size(),MSG_CONFIRM);
+    size_t bytes_send = 0;
+
 
     while(bytes_send != msg.size())
     {
-        bytes_send += send(m_client,msg.data() + bytes_send,msg.size()- bytes_send,MSG_CONFIRM);
+        ssize_t send_ret = send(m_client,msg.data() + bytes_send,msg.size()- bytes_send,MSG_CONFIRM);
+        
+        if(send_ret == -1)
+        {
+            return -1;
+        }
+        
+        bytes_send += send_ret;
     }
 
     return bytes_send;
@@ -131,11 +139,19 @@ void SocketClient::Connect(int port, const std::string &ip)
 ssize_t SocketClient::Send(const std::vector<char> &msg)
 {
     // TODO add error checking
-    ssize_t bytes_send = send(m_server,msg.data(),msg.size(),MSG_CONFIRM);
+    size_t bytes_send = 0;
+
 
     while(bytes_send != msg.size())
     {
-        bytes_send += send(m_server,msg.data() + bytes_send,msg.size() - bytes_send,MSG_CONFIRM);
+        ssize_t send_ret = send(m_server,msg.data() + bytes_send,msg.size()- bytes_send,MSG_CONFIRM);
+        
+        if(send_ret == -1)
+        {
+            return -1;
+        }
+        
+        bytes_send += send_ret;
     }
 
     return bytes_send;

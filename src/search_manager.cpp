@@ -63,7 +63,7 @@ void SearchManager::SearchNSendNewComputer(std::string file_name,
     catch(std::runtime_error &err)
     {
         std::cout << err.what() << std::endl;
-        return;
+        exit(1);
     }
 
     bool is_true = true;
@@ -92,9 +92,15 @@ void SearchManager::SearchNSendNewComputer(std::string file_name,
         size.push_back(size_ptr[i]);
     }
 
-    sock->Send(size);
+    if(sock->Send(size) == -1)
+    {
+        exit(-1);
+    }
 
-    sock->Send(file_to_send);
+    if(sock->Send(file_to_send) == -1)
+    {
+        exit(-1);
+    }
 }
 
 void SearchManager::SaveFromOtherComputer(std::string file_name, 
