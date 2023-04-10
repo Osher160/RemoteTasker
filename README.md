@@ -8,9 +8,10 @@ The remote tasker app does remote operations on different computers in the same 
 - 0.02- search and receive files from another computer.
 - 0.03 basic UI.
 - 0.04- windows support.
-- 0.05- adding a setting file.
-- 0.06- multiple search options.
-- 0.07- multiple connections.
+- 0.05- Exceptions and exceptions handler
+- 0.06- adding a setting file.
+- 0.07- multiple search options.
+- 0.08- multiple connections.
 
 # Operations
 

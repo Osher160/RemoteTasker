@@ -36,6 +36,7 @@ void SearchManager::SearchNSendSameComputer(const std::string file_name)
 
     while(is_true)
     {
+
         int ch = file.get();
 
         if(file.eof())
@@ -48,6 +49,9 @@ void SearchManager::SearchNSendSameComputer(const std::string file_name)
 
     std::cout << "the file: " << file_name << " saved into the " << m_save_to 
     << " directory " << std::endl; 
+
+    file.close();
+    new_file.close();
 }
 
 void SearchManager::SearchNSendNewComputer(std::string file_name, 
