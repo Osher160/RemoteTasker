@@ -28,6 +28,7 @@ public:
     void SaveFromOtherComputer(std::string file_name,std::shared_ptr<remote_tasker::Socket> sock);
 
 private:
+    enum {BUFF_SIZE = 1024};
     std::string m_save_to;
 }; //class SearchManager
 

@@ -16,6 +16,7 @@ void SearchManager::SearchNSendSameComputer(const std::string file_name)
     try
     {
         file =  FindFile(file_name,"/home/");
+
     }
     catch(std::runtime_error &err)
     {
@@ -31,24 +32,26 @@ void SearchManager::SearchNSendSameComputer(const std::string file_name)
     std::string save_to = m_save_to + '/' + file_name;
 
     std::ofstream new_file(save_to,std::ios::binary | std::ios::out);
-
-    bool is_true = true;
-
-    while(is_true)
+        
+    char buffer[BUFF_SIZE] = {0};
+    
+    while(file.read(buffer,BUFF_SIZE))
     {
 
-        int ch = file.get();
+        new_file.write(buffer,file.gcount());
 
-        if(file.eof())
-        {
-            break;
-        } 
-
-        new_file.put(ch);
     }
 
-    std::cout << "the file: " << file_name << " saved into the " << m_save_to 
-    << " directory " << std::endl; 
+    if(!file.eof() || !new_file)
+    {
+        std::cout << "problem in transferring the file" << std::endl;   
+    } 
+
+    else
+    {
+        std::cout << "the file: " << file_name << " saved into the " << m_save_to 
+        << " directory " << std::endl; 
+    }
 
     file.close();
     new_file.close();
