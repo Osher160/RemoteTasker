@@ -92,6 +92,8 @@ void OnEventSearch(std::shared_ptr<remote_tasker::SearchManager> search_m,
 
     // wait for the file and save it
     search_m->SaveFromOtherComputer(name,sock);
+    
+    std::cout << "Waiting for another file to search"<< std::endl;
 }
 
 
