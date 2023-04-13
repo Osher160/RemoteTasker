@@ -130,8 +130,6 @@ void SearchManager::SaveFromOtherComputer(std::string file_name,
 
     std::string save_to = m_save_to + '/' + file_name;
 
-    std::ofstream new_file(save_to,std::ios::binary | std::ios::out);
-    
     std::vector to_size = sock->Receive(sizeof(size_t));
     
     std::size_t * size = reinterpret_cast<size_t *>(to_size.data());
@@ -142,6 +140,11 @@ void SearchManager::SaveFromOtherComputer(std::string file_name,
 
         return;    
     }
+    
+    // after checking if the file found -> create new file and copy the content
+    std::ofstream new_file(save_to,std::ios::binary | std::ios::out);
+    
+
 
     std::vector file_data = sock->Receive(*size);
 
