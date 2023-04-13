@@ -76,6 +76,8 @@ void OnSearchingReq(std::shared_ptr<remote_tasker::SearchManager> search_m,
     std::vector<char> name = sock->Receive();
 
     search_m->SearchNSendNewComputer(name.data(),sock);
+    std::cout << "Sent file to the other computer."<< std::endl;
+
 }
 
 void OnEventSearch(std::shared_ptr<remote_tasker::SearchManager> search_m,
@@ -92,7 +94,7 @@ void OnEventSearch(std::shared_ptr<remote_tasker::SearchManager> search_m,
 
     // wait for the file and save it
     search_m->SaveFromOtherComputer(name,sock);
-    
+
     std::cout << "Waiting for another file to search"<< std::endl;
 }
 

@@ -62,6 +62,9 @@ void SearchManager::SearchNSendNewComputer(std::string file_name,
 {
     std::ifstream file;
 
+    // default - true - if file not found - became false and send empty vector
+    bool is_true = true;
+
     try
     {
         file =  FindFile(file_name,"/home/");
@@ -70,10 +73,9 @@ void SearchManager::SearchNSendNewComputer(std::string file_name,
     catch(std::runtime_error &err)
     {
         std::cout << err.what() << std::endl;
-        exit(1);
-    }
 
-    bool is_true = true;
+        is_true = false;
+    }
 
     std::vector<char> file_to_send;
 
@@ -101,11 +103,19 @@ void SearchManager::SearchNSendNewComputer(std::string file_name,
 
     if(sock->Send(size) == -1)
     {
+        //TODO - handle
         exit(-1);
+    }
+
+    // TODO make it normal
+    if(size_to_send == 0)
+    {
+        return;
     }
 
     if(sock->Send(file_to_send) == -1)
     {
+        //TODO - handle
         exit(-1);
     }
 }
@@ -126,14 +136,15 @@ void SearchManager::SaveFromOtherComputer(std::string file_name,
     
     std::size_t * size = reinterpret_cast<size_t *>(to_size.data());
 
-    std::vector file_data = sock->Receive(*size);
-
-    if(file_data.size() == 0)
+    if(*size == 0)
     {
-        std::cout << "the file: " << file_name << "not found";
+        std::cout << "the file: " << file_name << "not found" << std::endl;
 
         return;    
     }
+
+    std::vector file_data = sock->Receive(*size);
+
 
     std::size_t i = 0;
 
