@@ -33,7 +33,6 @@ void RemoteTasker::RunOnlyThisComputer()
 
 void RemoteTasker::RunAll()
 {
-    // TODO - REMOVE IN NEXT VERSIONS - check if server or client and create the one needed
     std::cout << "Is this computer server/client?" << std::endl;
     
     std::string is_server;

@@ -48,7 +48,6 @@ void ServerSocket::openServer(int port)
 
 ssize_t ServerSocket::Send(const std::vector<char>& msg)
 {
-    // TODO add error checking
     size_t bytes_send = 0;
 
 
@@ -69,13 +68,17 @@ ssize_t ServerSocket::Send(const std::vector<char>& msg)
 
 const std::vector<char> ServerSocket::Receive()
 {
-    // TODO add error checking
 
     std::vector<char> ret;
     
     ret.resize(MAX_USR_MSG);
 
     ssize_t real_size = recv(m_client,ret.data(),MAX_USR_MSG,0);
+
+    if(real_size == -1)
+    {
+        return std::vector<char>(BAD_VECTOR);
+    }
 
     ret.resize(real_size);
 
@@ -84,8 +87,6 @@ const std::vector<char> ServerSocket::Receive()
 
 const std::vector<char> ServerSocket::Receive(int size)
 {
-    // TODO add error checking
-
     std::vector<char> ret;
     
     ret.resize(size * sizeof(char));
@@ -95,6 +96,11 @@ const std::vector<char> ServerSocket::Receive(int size)
     while(real_size != size)
     {
         real_size += recv(m_client,ret.data() + real_size,(size - real_size),0);
+    
+        if(real_size == -1)
+        {
+            return std::vector<char>(BAD_VECTOR);
+        }
     }
 
     return ret;
@@ -138,7 +144,6 @@ void SocketClient::Connect(int port, const std::string &ip)
 
 ssize_t SocketClient::Send(const std::vector<char> &msg)
 {
-    // TODO add error checking
     size_t bytes_send = 0;
 
 
@@ -165,14 +170,17 @@ int SocketClient::GetEndpoint()
 
 const std::vector<char> SocketClient::Receive()
 {
-    // TODO add error checking
-
     std::vector<char> ret;
     
     ret.resize(MAX_USR_MSG);
 
     ssize_t real_size = recv(m_server,ret.data(),MAX_USR_MSG,0);
-
+    
+    if(real_size == -1)
+    {
+        return std::vector<char>(BAD_VECTOR);
+    }
+    
     ret.resize(real_size);
 
     return ret;
@@ -180,8 +188,6 @@ const std::vector<char> SocketClient::Receive()
 
 const std::vector<char> SocketClient::Receive(int size)
 {
-    // TODO add error checking
-
     std::vector<char> ret;
     
     ret.resize(size * sizeof(char));
@@ -191,6 +197,11 @@ const std::vector<char> SocketClient::Receive(int size)
     while(real_size != size)
     {
         real_size += recv(m_server,ret.data() + real_size,(size - real_size),0);
+    
+        if(real_size == -1)
+        {
+            return std::vector<char>(BAD_VECTOR);
+        }
     }
 
     return ret;

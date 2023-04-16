@@ -18,14 +18,18 @@ class Socket
 {
 public:
     virtual int GetEndpoint() =0;
+   
     virtual void Connect(int port,const std::string& ip) =0;
+   
     virtual ssize_t Send(const std::vector<char>& msg) = 0;
 
+    //return vector of chars if succuss, else, returns vector of char with 0;
     virtual const std::vector<char> Receive() = 0;
     virtual const std::vector<char> Receive(int size)= 0;
 
 
     enum  { MAX_USR_MSG = 4096000};
+    enum {BAD_VECTOR = 0};
 };
 
 
@@ -40,7 +44,9 @@ public:
     virtual int GetEndpoint();
 
     virtual void Connect(int port,const std::string& ip);
+    
     virtual ssize_t Send(const std::vector<char>& msg);
+
     virtual const std::vector<char> Receive();
     virtual const std::vector<char> Receive(int size);
     
@@ -58,7 +64,9 @@ public:
     virtual int GetEndpoint();
 
     virtual void Connect(int port,const std::string& ip);
+    
     virtual ssize_t Send(const std::vector<char>& msg);
+
     virtual const std::vector<char> Receive();
     virtual const std::vector<char> Receive(int size);
 

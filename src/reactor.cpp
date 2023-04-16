@@ -49,7 +49,6 @@ void InsertToSet(std::vector<fd_set*> &sets,const std::vector<Reactor::Pair> fds
 {
     for(std::size_t i = 0; i < fds.size(); ++i)
     {
-        // KEEP IN MIND that this function is icomplete -- TODO -- fix it for next release- to be not attached to the order in Select
         if(fds[i].second == Reactor::Mode::READ)
         {
             FD_SET(fds[i].first,sets[0]);
@@ -91,13 +90,13 @@ std::vector<Reactor::Pair> Reactor::Select(const std::vector<Pair> &fds)
 
     std::vector<fd_set *> sets;
 
-    //   MUST BE IN THAT ORDER in this version. TODO - fix
+    //   MUST BE IN THAT ORDER.
     sets.push_back(&read_fds);
     sets.push_back(&write_fds);
 
     InsertToSet(sets,fds);
 
-    // hardcoded, TODO - future builds - change
+    // hardcoded, TODO - future builds - change to setting file 
     timeval timeout = {5,0};
 
     int ret_select = select(BiggestFd(fds) +1, &read_fds,&write_fds,nullptr,&timeout);

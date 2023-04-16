@@ -103,11 +103,12 @@ void SearchManager::SearchNSendNewComputer(std::string file_name,
 
     if(sock->Send(size) == -1)
     {
-        //TODO - handle
-        exit(-1);
+
+        std::cout << "there was a problem sending the file, abort." << std::endl;
+
+        return;
     }
 
-    // TODO make it normal
     if(size_to_send == 0)
     {
         return;
@@ -115,8 +116,9 @@ void SearchManager::SearchNSendNewComputer(std::string file_name,
 
     if(sock->Send(file_to_send) == -1)
     {
-        //TODO - handle
-        exit(-1);
+        std::cout << "there was a problem sending the file, abort." << std::endl;
+
+        return;
     }
 }
 
@@ -136,7 +138,7 @@ void SearchManager::SaveFromOtherComputer(std::string file_name,
 
     if(*size == 0)
     {
-        std::cout << "the file: " << file_name << "not found" << std::endl;
+        std::cout << "the file: " << file_name << " not found" << std::endl;
 
         return;    
     }
@@ -147,6 +149,12 @@ void SearchManager::SaveFromOtherComputer(std::string file_name,
 
 
     std::vector file_data = sock->Receive(*size);
+
+    if (file_data.size() == 1 && file_data.front() == Socket::BAD_VECTOR)
+    {
+        std::cout << "there was a problem with the file, abort save." << std::endl;
+        return;
+    }
 
 
     std::size_t i = 0;
