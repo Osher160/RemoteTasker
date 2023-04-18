@@ -9,14 +9,27 @@
 #include <iostream>
 #include <vector>
 
-#include <gtk/gtk.h>
+#include <gtkmm.h>
 
-class window
+namespace remote_tasker
 {
- public:
+
+class App: public Gtk::Window
+{
+public:
+    App();
     
- private:
+protected:
+    void on_button_clicked();
+
+private:
+
+    Gtk::Button m_button;
+    Gtk::Button m_button2;
+
+    Gtk::Box m_box;
 
 };
 
+} // namespace remote_tasker
 #endif // __GUI_HPP__
