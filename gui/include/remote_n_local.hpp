@@ -1,10 +1,10 @@
 /******************************************************************************/
 /*	Project:	Remote Tasker   										      */
-/*	File:		gui.hpp	    										          */
-/*	Version: 	0.02														  */
+/*	File:		remote_n_local.hpp	    										          */
+/*	Version: 	0.03														  */
 /******************************************************************************/
-#ifndef __GUI_HPP__
-#define __GUI_HPP__
+#ifndef __REMOTE_N_LOCAL_HPP__
+#define __REMOTE_N_LOCAL_HPP__
 
 #include <iostream>
 #include <vector>
@@ -14,10 +14,10 @@
 namespace remote_tasker
 {
 
-class App: public Gtk::Window
+class RemoteNLocal: public Gtk::Window
 {
 public:
-    App();
+    RemoteNLocal();
     
 protected:
     void on_button_clicked();
@@ -32,4 +32,4 @@ private:
 };
 
 } // namespace remote_tasker
-#endif // __GUI_HPP__
+#endif // __REMOTE_N_LOCAL_HPP__
