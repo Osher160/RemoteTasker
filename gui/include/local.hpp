@@ -14,12 +14,20 @@
 namespace remote_tasker
 {
 
-class Local
+class Local : public Gtk::Window
 {
+ public:
     Local();
 
+ private:
 
-}
+    void OnSearch();
+    
+    Gtk::Entry m_entry;
+    Gtk::Button m_to_search;
+    Gtk::Box m_box;
+
+};
 
 } // namespace remote_tasker
 

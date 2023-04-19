@@ -20,15 +20,20 @@ public:
     RemoteNLocal();
     
 protected:
-    void on_button_clicked();
+    void on_button_clicked_local();
 
 private:
 
     Gtk::Button m_button;
     Gtk::Button m_button2;
+    
+    Gtk::Entry m_entry;
+    
+    Gtk::Label m_label_first;
+    Gtk::Label m_label_second;
+
 
     Gtk::Box m_box;
-
 };
 
 } // namespace remote_tasker
