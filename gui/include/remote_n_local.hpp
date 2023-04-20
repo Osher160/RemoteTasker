@@ -19,10 +19,11 @@ class RemoteNLocal: public Gtk::Window
 public:
     RemoteNLocal();
     
-protected:
-    void on_button_clicked_local();
+
 
 private:
+    void on_button_clicked_local();
+    void on_button_clicked_remote();
 
     Gtk::Button m_button;
     Gtk::Button m_button2;
