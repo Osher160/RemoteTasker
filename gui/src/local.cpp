@@ -49,8 +49,6 @@ void Local::OnSearch()
 
     std::string response = manager.SearchNSendSameComputerGui(buff->get_text());
 
-    //TODO Show the response to the user
-
     auto app = Gtk::Application::create("org.gtkmm.result");
 
     app->make_window_and_run< Result,std::string>
