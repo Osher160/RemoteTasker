@@ -57,6 +57,56 @@ void SearchManager::SearchNSendSameComputer(const std::string file_name)
     new_file.close();
 }
 
+std::string SearchManager::SearchNSendSameComputerGui(const std::string file_name)
+{
+    std::ifstream file;
+    try
+    {
+        file =  FindFile(file_name,"/home/");
+
+    }
+    catch(std::runtime_error &err)
+    {
+        return err.what(); 
+    }
+
+    if(!std::filesystem::exists(m_save_to) || !std::filesystem::is_directory(m_save_to))
+    {
+        std::filesystem::create_directory(m_save_to);
+    }
+
+    std::string save_to = m_save_to + '/' + file_name;
+
+    std::ofstream new_file(save_to,std::ios::binary | std::ios::out);
+        
+    char buffer[BUFF_SIZE] = {0};
+    
+    while(file.read(buffer,BUFF_SIZE))
+    {
+
+        new_file.write(buffer,file.gcount());
+
+    }
+
+    std::string ret;
+
+    if(!file.eof() || !new_file)
+    {
+        ret =  "problem in transferring the file";   
+    } 
+
+    else
+    {
+        ret =  "the file: " + file_name + " saved into the " + m_save_to 
+        + " directory "; 
+    }
+
+    file.close();
+    new_file.close();
+
+    return ret;
+}
+
 void SearchManager::SearchNSendNewComputer(std::string file_name, 
                         std::shared_ptr<remote_tasker::Socket> sock)
 {

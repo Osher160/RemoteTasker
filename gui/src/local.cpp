@@ -3,8 +3,9 @@
 
 #include "local.hpp"
 
-remote_tasker::Local::Local(): 
- m_box(Gtk::Orientation::VERTICAL)
+remote_tasker::Local::Local(std::string save_dir): 
+ m_box(Gtk::Orientation::VERTICAL),
+ manager(save_dir)
 {
     // set title and size of the window
     set_title("Remote Tasker - Local");
@@ -32,5 +33,10 @@ remote_tasker::Local::Local():
 void remote_tasker::Local::OnSearch() 
 {
     std::shared_ptr<Gtk::EntryBuffer> buff = m_entry.get_buffer();
+
+    std::string response = manager.SearchNSendSameComputerGui(buff->get_text());
+
+    //TODO Show the response to the user
+
 
 }

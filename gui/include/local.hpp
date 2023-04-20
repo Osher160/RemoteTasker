@@ -11,13 +11,15 @@
 
 #include <gtkmm.h>
 
+#include "search_manager.hpp"
+
 namespace remote_tasker
 {
 
 class Local : public Gtk::Window
 {
  public:
-    Local();
+    Local(std::string save_dir);
 
  private:
 
@@ -26,7 +28,7 @@ class Local : public Gtk::Window
     Gtk::Entry m_entry;
     Gtk::Button m_to_search;
     Gtk::Box m_box;
-
+    SearchManager manager;
 };
 
 } // namespace remote_tasker

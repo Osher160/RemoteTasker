@@ -47,16 +47,16 @@ void remote_tasker::RemoteNLocal::on_button_clicked_local()
 {
     //TODO - Get the save location
 
-    //TODO fork and exec 
+    Glib::RefPtr<Gtk::EntryBuffer> buffer = m_entry.get_buffer();
+
+    std::string text = buffer->get_text();
 
     //Create and Activate local window
+    close();
 
     auto app = Gtk::Application::create("org.gtkmm.local");
 
-    app->make_window_and_run<remote_tasker::Local>(0,NULL);
-
-
-    close();
+    app->make_window_and_run<remote_tasker::Local,std::string>(0,NULL,std::string(text));
 }
 
 int main(int argc, char ** argv)
