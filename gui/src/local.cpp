@@ -2,8 +2,10 @@
 
 
 #include "local.hpp"
+namespace remote_tasker
+{
 
-remote_tasker::Local::Local(std::string save_dir): 
+Local::Local(std::string save_dir): 
  m_box(Gtk::Orientation::VERTICAL),
  manager(save_dir)
 {
@@ -29,8 +31,19 @@ remote_tasker::Local::Local(std::string save_dir):
                             &remote_tasker::Local::OnSearch));
 }
 
+// class for sesult of the search
 
-void remote_tasker::Local::OnSearch() 
+Result::Result(std::string response):
+ m_label(response)
+{
+    set_title("Massage");
+    set_default_size(300, 200);
+
+    set_child(m_label);
+}
+
+
+void Local::OnSearch() 
 {
     std::shared_ptr<Gtk::EntryBuffer> buff = m_entry.get_buffer();
 
@@ -38,5 +51,11 @@ void remote_tasker::Local::OnSearch()
 
     //TODO Show the response to the user
 
+    auto app = Gtk::Application::create("org.gtkmm.result");
+
+    app->make_window_and_run< Result,std::string>
+                                        (0,NULL,std::string(response));
+
+}
 
 }

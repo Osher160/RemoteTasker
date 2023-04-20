@@ -31,6 +31,15 @@ class Local : public Gtk::Window
     SearchManager manager;
 };
 
+class Result : public Gtk::Window
+{
+ public:
+    Result(std::string response);
+
+ private:
+    Gtk::Label m_label;
+};
+
 } // namespace remote_tasker
 
 #endif // __LOCAL_HPP__
