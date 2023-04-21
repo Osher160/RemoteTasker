@@ -28,9 +28,9 @@ remote_tasker::RemoteNLocal::RemoteNLocal():
     // TODO - insert functions that activate the local | remote operations
 
     m_button.signal_clicked().connect(sigc::mem_fun(*this,
-                            &remote_tasker::RemoteNLocal::on_button_clicked_local));
+                        &remote_tasker::RemoteNLocal::on_button_clicked_local));
     m_button2.signal_clicked().connect(sigc::mem_fun(*this,
-                            &remote_tasker::RemoteNLocal::on_button_clicked_local));
+                        &remote_tasker::RemoteNLocal::on_button_clicked_remote));
 
     // append to the box
 
@@ -62,6 +62,10 @@ void remote_tasker::RemoteNLocal::on_button_clicked_local()
 void remote_tasker::RemoteNLocal::on_button_clicked_remote()
 {
     // Get the save location
+
+    Glib::RefPtr<Gtk::EntryBuffer> buffer = m_entry.get_buffer();
+
+    std::string text = buffer->get_text();
 
     // ask if server or client
 

@@ -1,7 +1,8 @@
 #include <gtkmm.h>
 
-
 #include "local.hpp"
+#include "gui_utils.hpp"
+
 namespace remote_tasker
 {
 
@@ -16,8 +17,6 @@ Local::Local(std::string save_dir):
     // set the m_box under the window
     set_child(m_box);
 
-  // TODO add directory check for search manager
-
     // set the button and entry values
     m_entry.set_text("file");  
     m_entry.set_margin(10);
@@ -30,18 +29,6 @@ Local::Local(std::string save_dir):
     m_to_search.signal_clicked().connect(sigc::mem_fun(*this, 
                             &remote_tasker::Local::OnSearch));
 }
-
-// class for sesult of the search
-
-Result::Result(std::string response):
- m_label(response)
-{
-    set_title("Massage");
-    set_default_size(300, 200);
-
-    set_child(m_label);
-}
-
 
 void Local::OnSearch() 
 {

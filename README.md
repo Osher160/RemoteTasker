@@ -35,3 +35,4 @@ The remote tasker can search for a file in another computer linked to the same W
 # known issues
 - Search is only in /home directories for now.
 - Search stops after the first occurrence.
+- Some PDF and docs files gets corrapted in the copy process.

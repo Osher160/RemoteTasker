@@ -25,12 +25,13 @@ private:
     void on_button_clicked_local();
     void on_button_clicked_remote();
 
+    Gtk::Label m_label_first;
+    
     Gtk::Button m_button;
     Gtk::Button m_button2;
     
     Gtk::Entry m_entry;
     
-    Gtk::Label m_label_first;
     Gtk::Label m_label_second;
 
 

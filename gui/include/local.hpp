@@ -1,7 +1,7 @@
 /******************************************************************************/
-/*	Project:	Remote Tasker   										      */
-/*	File:		local.hpp	    										          */
-/*	Version: 	0.03														  */
+/*	Project:	Remote Tasker   								               		      */
+/*	File:		local.hpp	    								           		            */
+/*	Version: 	0.03														                  */
 /******************************************************************************/
 #ifndef __LOCAL_HPP__
 #define __LOCAL_HPP__
@@ -29,15 +29,6 @@ class Local : public Gtk::Window
     Gtk::Button m_to_search;
     Gtk::Box m_box;
     SearchManager manager;
-};
-
-class Result : public Gtk::Window
-{
- public:
-    Result(std::string response);
-
- private:
-    Gtk::Label m_label;
 };
 
 } // namespace remote_tasker
