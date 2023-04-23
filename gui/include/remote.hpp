@@ -12,6 +12,7 @@
 #include <gtkmm.h>
 
 #include "search_manager.hpp"
+#include "gui_utils.hpp"
 
 namespace remote_tasker
 {
@@ -28,17 +29,9 @@ class Remote : public Gtk::Window
     Gtk::Entry m_entry;
     Gtk::Button m_to_search;
     Gtk::Box m_box;
+    
     SearchManager manager;
     std::shared_ptr<remote_tasker::Socket> m_sock;
-};
-
-class Result : public Gtk::Window
-{
- public:
-    Result(std::string response);
-
- private:
-    Gtk::Label m_label;
 };
 
 } // namespace remote_tasker

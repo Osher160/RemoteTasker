@@ -2,6 +2,11 @@
 
 #include "remote_n_local.hpp"
 #include "local.hpp"
+#include "remote.hpp"
+#include "gui_utils.hpp"
+
+// utility functions
+bool CheckIfServer();
 
 
 remote_tasker::RemoteNLocal::RemoteNLocal():
@@ -59,6 +64,11 @@ void remote_tasker::RemoteNLocal::on_button_clicked_local()
     app->make_window_and_run<remote_tasker::Local,std::string>(0,NULL,std::string(text));
 }
 
+bool CheckIfServer()
+{
+
+}
+
 void remote_tasker::RemoteNLocal::on_button_clicked_remote()
 {
     // Get the save location
@@ -69,9 +79,15 @@ void remote_tasker::RemoteNLocal::on_button_clicked_remote()
 
     // ask if server or client
 
+    bool is_server = CheckIfServer();
+
     // close window
+    close();
 
     // open server window
+    auto app = Gtk::Application::create("org.gtkmm.remote");
+
+    app->make_window_and_run<remote_tasker::Remote,std::string>(0,NULL,std::string(text));
 }
 
 int main(int argc, char ** argv)

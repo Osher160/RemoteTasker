@@ -36,6 +36,8 @@ Result::Result(std::string response):
     set_child(m_label);
 }
 
+
+
 } // namespace remote_tasker
 
 #endif // __GUI_UTILS_HPP__
