@@ -5,8 +5,7 @@
 #include "remote.hpp"
 #include "gui_utils.hpp"
 
-// utility functions
-bool CheckIfServer();
+
 
 
 remote_tasker::RemoteNLocal::RemoteNLocal():
@@ -64,9 +63,15 @@ void remote_tasker::RemoteNLocal::on_button_clicked_local()
     app->make_window_and_run<remote_tasker::Local,std::string>(0,NULL,std::string(text));
 }
 
-bool CheckIfServer()
+bool remote_tasker::RemoteNLocal::CheckIfServer()
 {
+    bool is_server = false;
 
+    auto app = Gtk::Application::create("org.gtkmm.check");
+
+    app->make_window_and_run<remote_tasker::CheckNSend,bool *>(0,nullptr,&is_server);
+
+    return is_server;
 }
 
 void remote_tasker::RemoteNLocal::on_button_clicked_remote()
@@ -78,16 +83,18 @@ void remote_tasker::RemoteNLocal::on_button_clicked_remote()
     std::string text = buffer->get_text();
 
     // ask if server or client
+    close();
 
     bool is_server = CheckIfServer();
 
+    std::cout << is_server;
+
     // close window
-    close();
 
     // open server window
     auto app = Gtk::Application::create("org.gtkmm.remote");
 
-    app->make_window_and_run<remote_tasker::Remote,std::string>(0,NULL,std::string(text));
+    app->make_window_and_run<remote_tasker::Remote,std::string>(0,NULL,std::string(text),is_server);
 }
 
 int main(int argc, char ** argv)

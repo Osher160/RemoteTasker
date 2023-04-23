@@ -36,6 +36,9 @@ private:
 
 
     Gtk::Box m_box;
+
+    // utility member functions
+    bool CheckIfServer();
 };
 
 } // namespace remote_tasker

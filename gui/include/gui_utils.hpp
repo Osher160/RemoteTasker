@@ -26,16 +26,23 @@ class Result : public Gtk::Window
     Gtk::Label m_label;
 };
 
-
-Result::Result(std::string response):
- m_label(response)
+class CheckNSend : public Gtk::Window
 {
-    set_title("Massage");
-    set_default_size(300, 200);
+ public:
+    CheckNSend(bool *is_true);
 
-    set_child(m_label);
-}
+ private:
+    void on_check_clicked();
 
+
+    Gtk::Button m_button;
+    Gtk::CheckButton m_is_server;
+    
+    bool *m_is_true;
+
+    Gtk::Box m_box;
+
+};
 
 
 } // namespace remote_tasker
