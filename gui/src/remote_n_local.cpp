@@ -82,14 +82,12 @@ void remote_tasker::RemoteNLocal::on_button_clicked_remote()
 
     std::string text = buffer->get_text();
 
-    // ask if server or client
+    // close window
     close();
 
+    // ask if server or client
+
     bool is_server = CheckIfServer();
-
-    std::cout << is_server;
-
-    // close window
 
     // open server window
     auto app = Gtk::Application::create("org.gtkmm.remote");

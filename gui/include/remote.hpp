@@ -17,6 +17,24 @@
 
 namespace remote_tasker
 {
+   
+class InitRemote: public Gtk::Window
+{
+ public:
+    InitRemote(bool is_server);
+
+ private:
+
+    void OnClick(); 
+    
+    Gtk::Entry m_ip;
+    Gtk::Entry m_port;
+    
+    Gtk::Button m_send;
+
+    Gtk::Box m_box;
+     
+}
 
 class Remote : public Gtk::Window
 {
