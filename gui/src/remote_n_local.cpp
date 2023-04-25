@@ -29,7 +29,7 @@ remote_tasker::RemoteNLocal::RemoteNLocal():
 
     set_default_size(200, 100);
     
-    // TODO - insert functions that activate the local | remote operations
+    //insert functions that activate the local | remote operations
 
     m_button.signal_clicked().connect(sigc::mem_fun(*this,
                         &remote_tasker::RemoteNLocal::on_button_clicked_local));

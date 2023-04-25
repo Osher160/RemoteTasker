@@ -17,11 +17,12 @@
 
 namespace remote_tasker
 {
-   
+
 class InitRemote: public Gtk::Window
 {
  public:
-    InitRemote(bool is_server);
+   // ret_ip & ret_port are out params
+    InitRemote(bool is_server,std::string *ret_ip, int *ret_port);
 
  private:
 
@@ -33,8 +34,11 @@ class InitRemote: public Gtk::Window
     Gtk::Button m_send;
 
     Gtk::Box m_box;
+   
+    std::string *m_ret_ip;
+    int *m_ret_port;
      
-}
+};
 
 class Remote : public Gtk::Window
 {
