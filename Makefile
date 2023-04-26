@@ -15,8 +15,8 @@ file_finder : ./src/file_finder.cpp ./src/utility.cpp ./tests/file_finder_test.c
 connector: ./src/connector.cpp ./tests/connector_test.cpp ./src/utility.cpp
 	$(CC) $(CPPFLAGS) $^ -o $@
 
-graphic_main: ./src/connector.cpp ./gui/src/remote_n_local.cpp ./gui/src/remote.cpp ./gui/src/gui_utils.cpp ./gui/src/local.cpp ./src/search_manager.cpp ./src/file_finder.cpp 
-	g++ $(CPPFLAGS) $^ -I ./gui/include -I ./include $$(pkg-config --cflags gtkmm-4.0) $$(pkg-config --libs gtkmm-4.0) -o remote_gui
+graphic_tasker: ./src/connector.cpp ./gui/src/remote_n_local.cpp ./gui/src/remote.cpp ./gui/src/gui_utils.cpp ./gui/src/local.cpp ./src/search_manager.cpp ./src/file_finder.cpp 
+	g++ $(CPPFLAGS) $^ -I ./gui/include -I ./include $$(pkg-config --cflags gtkmm-4.0) $$(pkg-config --libs gtkmm-4.0) -o graphic_tasker
 
 
 

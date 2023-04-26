@@ -20,17 +20,27 @@ The remote tasker can search for a file in another computer linked to the same W
 
 # Dependencies
 ## Build Dependencies
+- only for GUI version - gtkmm4
 - G++ compiler
 - Makefile
 
-# Usage
+## Usage
+# CLI version
 - 1. Download the repo.
 - 2. Build it with Make main
 - 3. Run "sudo ./remote_tasker"
 - 4. 1. For same computer - enter the directory for the copying files.
      -    Every time that you need a certain file, you can enter its name.
           The remote tasker will look it up and copy it to the directory.
+
      2. For another computer, enter if the computer is server or client (you can search & copy in both of them). Then write the port, if the computer is the client send also the IP of the server. then just write the name of the file that you want to copy.
+
+# GUI version
+
+- 1. Download the repo.
+- 2. Build it with Make graphic_tasker
+- 3. run "./graphic_tasker"
+- 4. follow the application instructions.
 
 # known issues
 - Search is only in /home directories for now.
