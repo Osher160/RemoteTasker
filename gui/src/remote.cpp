@@ -109,6 +109,8 @@ void remote_tasker::Remote::InitNActivateReactor()
     
     // for now - the thread never finishes it's execution TODO - join/detach
     std::thread th(ReactorActive,std::ref(m_reactor));
+
+    th.detach();
 }
 
 remote_tasker::InitRemote::InitRemote

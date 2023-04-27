@@ -44,7 +44,6 @@ remote_tasker::RemoteNLocal::RemoteNLocal():
 
     m_box.append(m_button);
     m_box.append(m_button2);
-
 }
 
 void remote_tasker::RemoteNLocal::on_button_clicked_local()
