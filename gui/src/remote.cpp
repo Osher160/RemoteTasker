@@ -1,8 +1,13 @@
+#include <thread>
+
 #include "remote.hpp"
 #include "connector.hpp"
 
 remote_tasker::Remote::Remote(std::string save_dir,bool is_server):
- m_manager(save_dir)
+ m_to_search("Search"),
+ m_box(Gtk::Orientation::VERTICAL),
+ m_manager(save_dir),
+ m_label("Enter the filename wanted")
 {
     int port = 0;
     std::string ip;
@@ -12,40 +17,97 @@ remote_tasker::Remote::Remote(std::string save_dir,bool is_server):
 
     app->make_window_and_run
     <remote_tasker::InitRemote,bool,std::string * ,int *>(0,NULL,bool(is_server),&ip,&port);
-
-    std::shared_ptr<Socket> sock = nullptr;
     
     // Init Socket according to server/ client
     if(is_server)
     {
-        sock.reset(new ServerSocket);
+        m_sock.reset(new ServerSocket);
         //TODO if server -open window that wait until server connected
 
-        sock->Connect(port,ip);
+        m_sock->Connect(port,ip);
     }
     else
     {
-        sock.reset(new SocketClient);
+        m_sock.reset(new SocketClient);
 
-        sock->Connect(port,ip);
+        m_sock->Connect(port,ip);
 
     }
-
-    std::cout << "hi" <<std::endl;
     // open a thread that will be waiting on reactor for requests from socket
+    InitNActivateReactor();
 
-    //
+    // for getting new requests    
+    m_to_search.signal_clicked().connect(sigc::mem_fun(*this, 
+                            &remote_tasker::Remote::OnSearch));    
+
+    // init box, entry , button, etc
+    set_title("RemoteTasker");
+    set_default_size(100,300);
+
+    m_entry.set_margin(10);
+
+    m_box.append(m_label);
+    m_box.append(m_entry);
+    m_box.append(m_to_search);
+
+
+    set_child(m_box);
 
 }
 
 void remote_tasker::Remote::OnSearch()
 {
+
+    //get the name of the file
+    std::shared_ptr<Gtk::EntryBuffer> buff = m_entry.get_buffer();
+
+    std::string name = buff->get_text();
+
+    //send the name to socket
+    std::vector<char> name_vec;
+
+    std::copy(name.begin(),name.end(),std::back_inserter(name_vec));
     
+    m_sock->Send(name_vec);
+
+    //wait for response
+    std::string msg = m_manager.SaveFromOtherComputerGui(name,m_sock);
+
+
+    // return status to user
+
+    auto app = Gtk::Application::create("org.gtkmm.result");
+
+    app->make_window_and_run< remote_tasker::Result,std::string>
+                                        (0,NULL,std::string(msg));
+
+}
+
+void OnSearchRequest(std::shared_ptr<remote_tasker::SearchManager> search_m,
+                             std::shared_ptr<remote_tasker::Socket> sock)
+{
+    std::vector<char> name = sock->Receive();
+
+    std::string msg = search_m->SearchNSendNewComputerGui(name.data(),sock);
+
+    auto app = Gtk::Application::create("org.gtkmm.result");
+
+    app->make_window_and_run< remote_tasker::Result,std::string>
+                                        (0,NULL,std::string(msg));
+}
+
+void ReactorActive(remote_tasker::Reactor& reactor)
+{
+    reactor.run();
 }
 
 void remote_tasker::Remote::InitNActivateReactor()
 {
-
+    m_reactor->Add(std::bind(OnSearchingReq,m_search_manager,m_sock),
+                                m_sock->GetEndpoint(),Reactor::Mode::READ);
+    
+    // for now - the thread never finishes it's execution TODO - join/detach
+    std::thread th(std::bind(ReactorActive,m_reactor));
 }
 
 remote_tasker::InitRemote::InitRemote

@@ -55,9 +55,11 @@ class Remote : public Gtk::Window
     Gtk::Entry m_entry;
     Gtk::Button m_to_search;
     Gtk::Box m_box;
-    
+
     SearchManager m_manager;
 
+    Gtk::Label m_label;
+    
     std::shared_ptr<remote_tasker::Socket> m_sock;
     std::shared_ptr<remote_tasker::Reactor> m_reactor;
 };

@@ -272,13 +272,15 @@ std::string SearchManager::SearchNSendNewComputerGui(std::string file_name,
 
     if(size_to_send == 0)
     {
-        return "file sent";
+        return "file not found";
     }
 
     if(sock->Send(file_to_send) == -1)
     {
         return "there was a problem sending the file, abort.";
     }
+
+    return "file sent";
 }
 
 std::string SearchManager::SaveFromOtherComputerGui(std::string file_name, 
