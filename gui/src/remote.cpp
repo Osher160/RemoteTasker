@@ -7,7 +7,8 @@ remote_tasker::Remote::Remote(std::string save_dir,bool is_server):
  m_to_search("Search"),
  m_box(Gtk::Orientation::VERTICAL),
  m_manager(save_dir),
- m_label("Enter the filename wanted")
+ m_label("Enter the filename wanted"),
+ m_reactor(new remote_tasker::Reactor)
 {
     int port = 0;
     std::string ip;
@@ -83,12 +84,12 @@ void remote_tasker::Remote::OnSearch()
 
 }
 
-void OnSearchRequest(std::shared_ptr<remote_tasker::SearchManager> search_m,
+void OnSearchRequest(remote_tasker::SearchManager &search_m,
                              std::shared_ptr<remote_tasker::Socket> sock)
 {
     std::vector<char> name = sock->Receive();
 
-    std::string msg = search_m->SearchNSendNewComputerGui(name.data(),sock);
+    std::string msg = search_m.SearchNSendNewComputerGui(name.data(),sock);
 
     auto app = Gtk::Application::create("org.gtkmm.result");
 
@@ -96,18 +97,18 @@ void OnSearchRequest(std::shared_ptr<remote_tasker::SearchManager> search_m,
                                         (0,NULL,std::string(msg));
 }
 
-void ReactorActive(remote_tasker::Reactor& reactor)
+void ReactorActive(std::shared_ptr<remote_tasker::Reactor> reactor)
 {
-    reactor.run();
+    reactor->Run();
 }
 
 void remote_tasker::Remote::InitNActivateReactor()
 {
-    m_reactor->Add(std::bind(OnSearchingReq,m_search_manager,m_sock),
+    m_reactor->Add(std::bind(OnSearchRequest,m_manager,m_sock),
                                 m_sock->GetEndpoint(),Reactor::Mode::READ);
     
     // for now - the thread never finishes it's execution TODO - join/detach
-    std::thread th(std::bind(ReactorActive,m_reactor));
+    std::thread th(ReactorActive,std::ref(m_reactor));
 }
 
 remote_tasker::InitRemote::InitRemote
