@@ -50,7 +50,6 @@ class Remote : public Gtk::Window
     void OnSearch();
     
     //open a thread and activate reactor to catch searches from other computer
-    void InitNActivateReactor();
 
     Gtk::Entry m_entry;
     Gtk::Button m_to_search;
@@ -61,7 +60,7 @@ class Remote : public Gtk::Window
     Gtk::Label m_label;
     
     std::shared_ptr<remote_tasker::Socket> m_sock;
-    std::shared_ptr<remote_tasker::Reactor> m_reactor;
+    Glib::RefPtr<Glib::IOChannel> m_socket_notifier;
 };
 
 } // namespace remote_tasker

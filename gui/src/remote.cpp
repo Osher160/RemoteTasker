@@ -1,14 +1,30 @@
 #include <thread>
 
+#include <glibmm/iochannel.h>
+
 #include "remote.hpp"
 #include "connector.hpp"
+
+
+bool MyCallback(Glib::IOCondition io_condition,std::shared_ptr<remote_tasker::Socket> sock,remote_tasker::SearchManager *manager)
+{
+    std::vector<char> name = sock->Receive();
+
+    std::string msg = manager->SearchNSendNewComputerGui(name.data(),sock);
+
+    auto app = Gtk::Application::create("org.gtkmm.result");
+
+    app->make_window_and_run< remote_tasker::Result,std::string>
+                                        (0,NULL,std::string(msg));
+
+    return true;
+}
 
 remote_tasker::Remote::Remote(std::string save_dir,bool is_server):
  m_to_search("Search"),
  m_box(Gtk::Orientation::VERTICAL),
  m_manager(save_dir),
- m_label("Enter the filename wanted"),
- m_reactor(new remote_tasker::Reactor)
+ m_label("Enter the filename wanted")
 {
     int port = 0;
     std::string ip;
@@ -34,13 +50,14 @@ remote_tasker::Remote::Remote(std::string save_dir,bool is_server):
         m_sock->Connect(port,ip);
 
     }
-    // open a thread that will be waiting on reactor for requests from socket
-    InitNActivateReactor();
 
     // for getting new requests    
     m_to_search.signal_clicked().connect(sigc::mem_fun(*this, 
-                            &remote_tasker::Remote::OnSearch));    
+                            &remote_tasker::Remote::OnSearch));  
+    
+ Glib::signal_io().connect(sigc::bind(sigc::ptr_fun(MyCallback),m_sock,&m_manager), m_sock->GetEndpoint(), Glib::IOCondition::IO_IN);
 
+    // init box, entry , button, etc
     // init box, entry , button, etc
     set_title("RemoteTasker");
     set_default_size(100,300);
@@ -84,34 +101,6 @@ void remote_tasker::Remote::OnSearch()
 
 }
 
-void OnSearchRequest(remote_tasker::SearchManager &search_m,
-                             std::shared_ptr<remote_tasker::Socket> sock)
-{
-    std::vector<char> name = sock->Receive();
-
-    std::string msg = search_m.SearchNSendNewComputerGui(name.data(),sock);
-
-    auto app = Gtk::Application::create("org.gtkmm.result");
-
-    app->make_window_and_run< remote_tasker::Result,std::string>
-                                        (0,NULL,std::string(msg));
-}
-
-void ReactorActive(std::shared_ptr<remote_tasker::Reactor> reactor)
-{
-    reactor->Run();
-}
-
-void remote_tasker::Remote::InitNActivateReactor()
-{
-    m_reactor->Add(std::bind(OnSearchRequest,m_manager,m_sock),
-                                m_sock->GetEndpoint(),Reactor::Mode::READ);
-    
-    // for now - the thread never finishes it's execution TODO - join/detach
-    std::thread th(ReactorActive,m_reactor);
-
-    th.detach();
-}
 
 remote_tasker::InitRemote::InitRemote
                     (bool is_server,std::string *ret_ip, int *ret_port):
