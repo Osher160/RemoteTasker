@@ -9,7 +9,7 @@
 bool MyCallback(Glib::IOCondition io_condition,std::shared_ptr<remote_tasker::Socket> sock,remote_tasker::SearchManager *manager)
 {
     // TODO - use io_condition
-    void(io_condition);
+    (void)(io_condition);
 
     std::vector<char> name = sock->Receive();
 
