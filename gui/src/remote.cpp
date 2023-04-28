@@ -8,6 +8,11 @@
 
 bool MyCallback(Glib::IOCondition io_condition,std::shared_ptr<remote_tasker::Socket> sock,remote_tasker::SearchManager *manager)
 {
+    if(!io_condition)
+    {
+        // TODO - more subtle
+        exit(1);
+    }
     std::vector<char> name = sock->Receive();
 
     std::string msg = manager->SearchNSendNewComputerGui(name.data(),sock);
