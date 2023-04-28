@@ -12,10 +12,7 @@ bool MyCallback(Glib::IOCondition io_condition,std::shared_ptr<remote_tasker::So
 
     std::string msg = manager->SearchNSendNewComputerGui(name.data(),sock);
 
-    auto app = Gtk::Application::create("org.gtkmm.result");
-
-    app->make_window_and_run< remote_tasker::Result,std::string>
-                                        (0,NULL,std::string(msg));
+    std::cout << msg << std::endl;
 
     return true;
 }
@@ -94,11 +91,7 @@ void remote_tasker::Remote::OnSearch()
 
     // return status to user
 
-    auto app = Gtk::Application::create("org.gtkmm.result");
-
-    app->make_window_and_run< remote_tasker::Result,std::string>
-                                        (0,NULL,std::string(msg));
-
+    std::cout << msg << std::endl;
 }
 
 
