@@ -22,10 +22,18 @@ public:
 
     // for now - searching only in /home/ directories. 
     void SearchNSendSameComputer(const std::string file_name);
+    std::string SearchNSendSameComputerGui(const std::string file_name);
+
     
     void SearchNSendNewComputer(std::string file_name, 
                 std::shared_ptr<remote_tasker::Socket> sock);
-    void SaveFromOtherComputer(std::string file_name,std::shared_ptr<remote_tasker::Socket> sock);
+    std::string SearchNSendNewComputerGui(std::string file_name, 
+                std::shared_ptr<remote_tasker::Socket> sock);
+
+    void SaveFromOtherComputer
+            (std::string file_name,std::shared_ptr<remote_tasker::Socket> sock);
+    std::string SaveFromOtherComputerGui
+            (std::string file_name,std::shared_ptr<remote_tasker::Socket> sock);
 
 private:
     enum {BUFF_SIZE = 1024};
