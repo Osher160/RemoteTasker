@@ -30,11 +30,11 @@ The remote tasker can search for a file in another computer linked to the same W
 - 1. Download the repo.
 - 2. Build it with Make main
 - 3. Run "sudo ./remote_tasker"
-- 4. 1. For same computer - enter the directory for the copying files.
+- 4. 1. For searching on your own computer - enter the directory for the copying files.
      -    Every time that you need a certain file, you can enter its name.
           The remote tasker will look it up and copy it to the directory.
 
-     2. For another computer, enter if the computer is server or client (you can search & copy in both of them). Then write the port, if the computer is the client send also the IP of the server. then just write the name of the file that you want to copy.
+     2. For another computer, enter if the computer is a server or client (you can search & copy from both of them). Then write the port, if the computer is the client send also the IP of the server. then just write the name of the file that you want to copy.
 
 ## GUI version
 
@@ -45,5 +45,5 @@ The remote tasker can search for a file in another computer linked to the same W
 
 # known issues
 - Search is only in /home directories for now.
-- Search stops after the first occurrence.
-- Some PDF and docs files corrupts in the copy process.
+- The search stops after the first occurrence.
+- Some PDF and docs files corrupt in the copy process.
