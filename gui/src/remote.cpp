@@ -8,13 +8,18 @@
 
 bool MyCallback(Glib::IOCondition io_condition,std::shared_ptr<remote_tasker::Socket> sock,remote_tasker::SearchManager *manager)
 {
-    // TODO - use io_condition
-    (void)(io_condition);
+    if ((io_condition & Glib::IOCondition::IO_IN) != Glib::IOCondition::IO_IN) 
+    {
+        std::cerr << "Invalid response" << std::endl;
+
+        exit(1);
+    }
 
     std::vector<char> name = sock->Receive();
 
     std::string msg = manager->SearchNSendNewComputerGui(name.data(),sock);
-
+    
+    // TODO to log, if there is a problem - print on screen
     std::cout << msg << std::endl;
 
     return true;
@@ -39,10 +44,12 @@ remote_tasker::Remote::Remote(std::string save_dir,bool is_server):
     if(is_server)
     {
         m_sock.reset(new ServerSocket);
-        //TODO if server -open window that wait until server connected
+
+        std::cout << "Waiting for connection from client" << std::endl;
 
         m_sock->Connect(port,ip);
     }
+    
     else
     {
         m_sock.reset(new SocketClient);
@@ -93,6 +100,7 @@ void remote_tasker::Remote::OnSearch()
 
 
     // return status to user
+    // TODO to log, if there is a problem - print on screen
 
     std::cout << msg << std::endl;
 }
