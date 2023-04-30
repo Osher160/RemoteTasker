@@ -25,8 +25,8 @@ The remote tasker can search for a file in another computer linked to the same W
 - G++ compiler
 - Makefile
 
-## Usage
-# CLI version
+# Usage
+## CLI version
 - 1. Download the repo.
 - 2. Build it with Make main
 - 3. Run "sudo ./remote_tasker"
@@ -36,7 +36,7 @@ The remote tasker can search for a file in another computer linked to the same W
 
      2. For another computer, enter if the computer is server or client (you can search & copy in both of them). Then write the port, if the computer is the client send also the IP of the server. then just write the name of the file that you want to copy.
 
-# GUI version
+## GUI version
 
 - 1. Download the repo.
 - 2. Build it with Make graphic_tasker
