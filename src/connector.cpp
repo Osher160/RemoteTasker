@@ -1,5 +1,3 @@
-
-
 #ifdef __linux__
 #include <unistd.h> // read 
 
@@ -12,6 +10,8 @@
 
 
 #elif _WIN32
+#include <winsock2.h>
+#include <Ws2tcpip.h>
 
 #endif
 
@@ -26,14 +26,19 @@ void ServerSocket::openServer(int port)
     // init new listening socket. TODO - another function that support more clients
     int sock = socket(AF_INET,SOCK_STREAM,0);
     ExitIfBad(sock == -1,"Prob with socket");
-
     
     struct sockaddr_in addr;
     struct sockaddr_in addr_client;
 
     addr.sin_port = htons(port);
-    addr.sin_addr.s_addr = INADDR_ANY;
+    
     addr.sin_family = AF_INET;
+
+#ifdef _WIN32
+    addr.sin_addr.S_un.S_addr = INADDR_ANY;
+#elif __linux__
+    addr.sin_addr.s_addr = INADDR_ANY;
+#endif
 
     int is_good = bind(sock,(const sockaddr *)&addr,sizeof(addr));
     ExitIfBad(is_good == -1,"Prob with bind");
